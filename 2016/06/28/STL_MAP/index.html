@@ -1,0 +1,100 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>How to Use Map in STL？ | 泡饭</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/6.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">How to Use Map in STL？</h1><a id="logo" href="/.">泡饭</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">How to Use Map in STL？</h1><div class="post-meta">Jun 28, 2016<span> | </span><span class="category"><a href="/categories/Document/">Document</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><a data-disqus-identifier="2016/06/28/STL_MAP/" href="/2016/06/28/STL_MAP/#disqus_thread" class="disqus-comment-count"></a><div class="clear"><div id="toc" class="toc-article"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Map"><span class="toc-text">Map</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Map最基本的构造函数；"><span class="toc-text">Map最基本的构造函数；</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Map基本操作"><span class="toc-text">Map基本操作</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#示例代码"><span class="toc-text">示例代码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#图示"><span class="toc-text">图示</span></a></li></ol></div></div><div class="post-content"><h1 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h1><p>Map是STL的一个关联容器，它提供一对一（其中第一个可以称为关键字Key，每个关键字只能在map中出现一次，第二个可能称为该关键字的值Value）的数据处理能力，由于这个特性，它完成有可能在我们处理一对一数据的时候，在编程上提供快速通道。map内部自建一颗红黑树(一种非严格意义上的平衡二叉树)，这颗树具有对数据自动排序的功能，所以在map内部所有的数据都是有序的。</p>
+<h2 id="Map最基本的构造函数；"><a href="#Map最基本的构造函数；" class="headerlink" title="Map最基本的构造函数；"></a>Map最基本的构造函数；</h2><p>似乎就只有这六种：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">map</span>&lt;<span class="built_in">string</span> , <span class="keyword">int</span> &gt;mapstring;         <span class="built_in">map</span>&lt;<span class="keyword">int</span> ,<span class="built_in">string</span> &gt;mapint;</div><div class="line"><span class="built_in">map</span>&lt;sring, <span class="keyword">char</span>&gt;mapstring;         <span class="built_in">map</span>&lt; <span class="keyword">char</span> ,<span class="built_in">string</span>&gt;mapchar;</div><div class="line"><span class="built_in">map</span>&lt;<span class="keyword">char</span> ,<span class="keyword">int</span>&gt;mapchar;            <span class="built_in">map</span>&lt;<span class="keyword">int</span> ,<span class="keyword">char</span> &gt;mapint；</div></pre></td></tr></table></figure></p>
+<h2 id="Map基本操作"><a href="#Map基本操作" class="headerlink" title="Map基本操作"></a>Map基本操作</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">代码</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">begin()</td>
+<td style="text-align:center">返回指向map头部的迭代器</td>
+</tr>
+<tr>
+<td style="text-align:center">clear(）</td>
+<td style="text-align:center">删除所有元素</td>
+</tr>
+<tr>
+<td style="text-align:center">count()</td>
+<td style="text-align:center">返回指定元素出现的次数</td>
+</tr>
+<tr>
+<td style="text-align:center">empty()</td>
+<td style="text-align:center">如果map为空则返回true</td>
+</tr>
+<tr>
+<td style="text-align:center">end()</td>
+<td style="text-align:center">返回指向map末尾的迭代器</td>
+</tr>
+<tr>
+<td style="text-align:center">erase()</td>
+<td style="text-align:center">删除一个元素</td>
+</tr>
+<tr>
+<td style="text-align:center">find()</td>
+<td style="text-align:center">查找一个元素</td>
+</tr>
+<tr>
+<td style="text-align:center">insert()</td>
+<td style="text-align:center">插入元素</td>
+</tr>
+<tr>
+<td style="text-align:center">lower_bound()</td>
+<td style="text-align:center">返回键值&gt;=给定元素的第一个位置</td>
+</tr>
+<tr>
+<td style="text-align:center">upper_bound()</td>
+<td style="text-align:center">返回键值&gt;给定元素的第一个位置</td>
+</tr>
+<tr>
+<td style="text-align:center">max_size()</td>
+<td style="text-align:center">返回可以容纳的最大元素个数</td>
+</tr>
+<tr>
+<td style="text-align:center">size()</td>
+<td style="text-align:center">返回map中元素的个数</td>
+</tr>
+<tr>
+<td style="text-align:center">swap()</td>
+<td style="text-align:center">交换两个map</td>
+</tr>
+<tr>
+<td style="text-align:center">key_comp()</td>
+<td style="text-align:center">返回比较元素key的函数</td>
+</tr>
+<tr>
+<td style="text-align:center">value_comp()</td>
+<td style="text-align:center">返回比较元素value的函数</td>
+</tr>
+</tbody>
+</table>
+<h1 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">map</span> &lt;<span class="keyword">int</span>,<span class="built_in">string</span>&gt; mp,mp2;</div><div class="line">    <span class="comment">//插入</span></div><div class="line">    mp.insert(pair&lt;<span class="keyword">int</span> , <span class="built_in">string</span>&gt;(<span class="number">1</span>,<span class="string">"James"</span>));</div><div class="line">    mp.insert(pair&lt;<span class="keyword">int</span> , <span class="built_in">string</span>&gt;(<span class="number">5</span>,<span class="string">"Pop"</span>));</div><div class="line">    mp.insert(pair&lt;<span class="keyword">int</span> , <span class="built_in">string</span>&gt;(<span class="number">4</span>,<span class="string">"Lee"</span>));</div><div class="line">    mp.insert(pair&lt;<span class="keyword">int</span> , <span class="built_in">string</span>&gt;(<span class="number">6</span>,<span class="string">"Jack"</span>));</div><div class="line">    mp.insert(<span class="built_in">map</span>&lt;<span class="keyword">int</span>,<span class="built_in">string</span>&gt;::value_type(<span class="number">2</span>,<span class="string">"Beyond"</span>));</div><div class="line">    mp[<span class="number">3</span>]=<span class="string">"Tom"</span>;</div><div class="line">    <span class="comment">//mp2</span></div><div class="line">    mp2.insert(pair&lt;<span class="keyword">int</span> , <span class="built_in">string</span>&gt;(<span class="number">1</span>,<span class="string">"Changed"</span>));</div><div class="line">    <span class="comment">//查找</span></div><div class="line">    <span class="built_in">map</span>&lt;<span class="keyword">int</span> ,<span class="built_in">string</span>&gt;::iterator iter;</div><div class="line">    iter=mp.find(<span class="number">2</span>);</div><div class="line">    <span class="keyword">if</span>(iter!=mp.end())</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"找到了key=2的元素，value="</span>&lt;&lt;(*iter).second&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="comment">//删除</span></div><div class="line">    iter=mp.find(<span class="number">4</span>);</div><div class="line">    <span class="keyword">if</span>(iter!=mp.end())</div><div class="line">    mp.erase(iter);</div><div class="line">    <span class="keyword">for</span>(iter=mp.begin();iter!=mp.end();iter++)</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">" "</span>&lt;&lt;(*iter).first&lt;&lt;<span class="string">" "</span>&lt;&lt;(*iter).second&lt;&lt;<span class="built_in">endl</span>;</div><div class="line"></div><div class="line">    mp.swap(mp2);</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"changing"</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">for</span>(iter=mp.begin();iter!=mp.end();iter++)</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">" "</span>&lt;&lt;(*iter).first&lt;&lt;<span class="string">" "</span>&lt;&lt;(*iter).second&lt;&lt;<span class="built_in">endl</span>;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="图示"><a href="#图示" class="headerlink" title="图示"></a>图示</h1><p> <img src="/images/map.png" alt="Vector使用图示"></p>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="beyondtech.org/2016/06/28/STL_MAP/" data-id="cj2wl4kq6008kf845aihsye0n" class="article-share-link">分享</a><div class="tags"><a href="/tags/数据结构/">数据结构</a><a href="/tags/STL/">STL</a></div><div class="post-nav"><a href="/2016/06/29/STL_QUEUE_STACK/" class="pre">How to Use Queue and Stack in STL？</a><a href="/2016/06/28/STL_VECTOR/" class="next">How to Use Vector in STL？</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'beyondwang';
+var disqus_identifier = '2016/06/28/STL_MAP/';
+var disqus_title = 'How to Use Map in STL？';
+var disqus_url = 'beyondtech.org/2016/06/28/STL_MAP/';
+$('.btn_click_load').click(function() {
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+  $('.btn_click_load').css('display','none');
+});
+$.ajax({
+  url: 'https://disqus.com/favicon.ico',
+  timeout: 3000,
+  type: 'GET',
+  success: (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    $('.btn_click_load').css('display','none');
+  })(),
+  error: function() {
+    $('.btn_click_load').css('display','block');
+  }
+});</script><script id="dsq-count-scr" src="//beyondwang.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1 pure-u-md-1-4"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="beyondtech.org"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/">Algorithm</a><span class="category-list-count">61</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ariticle/">Ariticle</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Daily/">Daily</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Document/">Document</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Expirence/">Expirence</a><span class="category-list-count">20</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/">Language</a><span class="category-list-count">28</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Resource/">Resource</a><span class="category-list-count">1</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/ACM/" style="font-size: 15px;">ACM</a> <a href="/tags/经典问题/" style="font-size: 15px;">经典问题</a> <a href="/tags/DP/" style="font-size: 15px;">DP</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/项目/" style="font-size: 15px;">项目</a> <a href="/tags/SQL/" style="font-size: 15px;">SQL</a> <a href="/tags/ASP-NET/" style="font-size: 15px;">ASP.NET</a> <a href="/tags/Feeling/" style="font-size: 15px;">Feeling</a> <a href="/tags/Shell/" style="font-size: 15px;">Shell</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Bash/" style="font-size: 15px;">Bash</a> <a href="/tags/Thread/" style="font-size: 15px;">Thread</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/面向对象/" style="font-size: 15px;">面向对象</a> <a href="/tags/串/" style="font-size: 15px;">串</a> <a href="/tags/Mac/" style="font-size: 15px;">Mac</a> <a href="/tags/Oracle/" style="font-size: 15px;">Oracle</a> <a href="/tags/数据结构/" style="font-size: 15px;">数据结构</a> <a href="/tags/STL/" style="font-size: 15px;">STL</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Markdown/" style="font-size: 15px;">Markdown</a> <a href="/tags/Tools/" style="font-size: 15px;">Tools</a> <a href="/tags/IOS/" style="font-size: 15px;">IOS</a> <a href="/tags/Swift/" style="font-size: 15px;">Swift</a> <a href="/tags/服务器/" style="font-size: 15px;">服务器</a> <a href="/tags/VB/" style="font-size: 15px;">VB</a> <a href="/tags/平面几何/" style="font-size: 15px;">平面几何</a> <a href="/tags/数论/" style="font-size: 15px;">数论</a> <a href="/tags/小说/" style="font-size: 15px;">小说</a> <a href="/tags/随笔/" style="font-size: 15px;">随笔</a> <a href="/tags/Tree/" style="font-size: 15px;">Tree</a> <a href="/tags/快速/" style="font-size: 15px;">快速</a> <a href="/tags/记事本/" style="font-size: 15px;">记事本</a> <a href="/tags/游戏开发/" style="font-size: 15px;">游戏开发</a> <a href="/tags/矩阵/" style="font-size: 15px;">矩阵</a> <a href="/tags/Resource/" style="font-size: 15px;">Resource</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/05/01/nginx设置Https/">Nginx设置https</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/04/Ubuntu服务器搭建ss/">服务器搭建Ss</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/22/自制拖拉机/">自制拖拉机</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/22/神经网络/">简单神经网络</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/18/Python的面向对象编程/">Python的面向对象编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/校园免流末班车/">校园免流末班车</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/11/Python函数式编程和模块/">Python函数式编程和模块</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/Python初体验/">Python初体验</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/05/ARMA模型实践/">ARIMA模型实践笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/01/Ubuntu配设Nginx/">Ubuntu下安装Nginx</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//beyondwang.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://xuanwo.org/" title="漩涡大神" target="_blank">漩涡大神</a><ul></ul><a href="https://fanzheng.org/" title="范神" target="_blank">范神</a><ul></ul><a href="http://www.liaoxuefeng.com/" title="廖雪峰" target="_blank">廖雪峰</a><ul></ul><a href="https://teddysun.com/" title="秋水逸冰" target="_blank">秋水逸冰</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2017 <a href="/." rel="nofollow">泡饭.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
