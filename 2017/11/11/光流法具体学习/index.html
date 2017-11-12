@@ -1,0 +1,90 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>光流法具体学习小结 | 泡饭</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/6.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">光流法具体学习小结</h1><a id="logo" href="/.">泡饭</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">光流法具体学习小结</h1><div class="post-meta">Nov 11, 2017<span> | </span><span class="category"><a href="/categories/Document/">Document</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><a data-disqus-identifier="2017/11/11/光流法具体学习/" href="/2017/11/11/光流法具体学习/#disqus_thread" class="disqus-comment-count"></a><div class="clear"><div id="toc" class="toc-article"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#光流法"><span class="toc-text">光流法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Optical-FLow"><span class="toc-text">Optical_FLow</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#OpticalFlowInterface-h"><span class="toc-text">OpticalFlowInterface.h</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OpticalFlowVisualization-h"><span class="toc-text">OpticalFlowVisualization.h</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OpticalFLowFactory"><span class="toc-text">OpticalFLowFactory</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NovelView-h-cpp"><span class="toc-text">NovelView.h/cpp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PixFlow-h"><span class="toc-text">PixFlow.h</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TIPs"><span class="toc-text">TIPs</span></a></li></ol></div></div><div class="post-content"><h1 id="光流法"><a href="#光流法" class="headerlink" title="光流法"></a>光流法</h1><p>对光流法的理解建立在以下三篇学习笔记上。</p>
+<p><a href="http://blog.csdn.net/tfygg/article/details/50528436" target="_blank" rel="external">光流法</a><br><a href="http://blog.csdn.net/carson2005/article/details/7581642" target="_blank" rel="external">光流法简单介绍</a><br><a href="http://bbs.elecfans.com/jishu_485979_1_1.html" target="_blank" rel="external">通俗的讲什么是光流法</a></p>
+<blockquote>
+<p>在<strong>通俗的讲什么是光流法</strong>一文中因如此看两幅“挥动的手”图片。<br>因为光流法假设两帧之间亮度不便，即是灰度不变，故孟塞尔颜色系统中明度（value）为定值。<br>色相（hue）表像素运动二维方向。<br>色度（chroma）表像素运动的速度。<br>故光流场是图片中每个像素都有一个x方向和y方向的位移，所以在上面那些光流计算结束后得到的光流flow是个和原来图像大小相等的双通道图像。</p>
+</blockquote>
+<h1 id="Optical-FLow"><a href="#Optical-FLow" class="headerlink" title="Optical_FLow"></a>Optical_FLow</h1><blockquote>
+<p>项目/Surround360/surround360_render/source/iptical_flow目录下的这些文件具体实现了光流法。</p>
+</blockquote>
+<h2 id="OpticalFlowInterface-h"><a href="#OpticalFlowInterface-h" class="headerlink" title="OpticalFlowInterface.h"></a>OpticalFlowInterface.h</h2><blockquote>
+<p>导入了<strong>OpenCV2</strong>的包，具体算法因在opencv2的手册中获得。<em>（Undo）</em></p>
+<p>定义了抽象方法“computeOpticalFlow”，从中可以获取一下信息</p>
+<ol>
+<li>经过光流计算，使得I1图像拼接部分接近I0。I0/I1是1字节的BGRA格式，有alpha通道。I0/I1是两个相邻camera的image。</li>
+<li>在处理video时，prevI0/I1则记录上一帧I0/I1 camera的image。</li>
+<li>处理video第一帧时，等同于处理photo，忽略prevI0/prevI1。</li>
+</ol>
+</blockquote>
+<h2 id="OpticalFlowVisualization-h"><a href="#OpticalFlowVisualization-h" class="headerlink" title="OpticalFlowVisualization.h"></a>OpticalFlowVisualization.h</h2><blockquote>
+<p>四个方法，对像素运动信息做了处理。</p>
+</blockquote>
+<p><strong>visualizeFlowAsGreyDisparity</strong></p>
+<blockquote>
+<p>用灰度表将光流可视化，是对像素的x轴运动信息的分离。</p>
+</blockquote>
+<p><strong>visualizeFlowAsVectorField</strong></p>
+<blockquote>
+<p>将光流区域的运动方向覆盖到顶端</p>
+</blockquote>
+<p><strong>visualizeFlowColorWheel</strong></p>
+<blockquote>
+<p>利用<em>孟塞尔颜色系统</em>，将运动信息可视化。色调（hue）表方向，色度（magnitude）表运动速度标量，明度是一个的常量。</p>
+</blockquote>
+<h2 id="OpticalFLowFactory"><a href="#OpticalFLowFactory" class="headerlink" title="OpticalFLowFactory"></a>OpticalFLowFactory</h2><blockquote>
+<p>是一个工厂类，目的是运用不同的“FlowAlgorithm”去实例化OpticalFlowInterface.h<br>得知有两种算法：<br><em>pixflow_low</em>和<em>pixflow_search_20</em></p>
+</blockquote>
+<h2 id="NovelView-h-cpp"><a href="#NovelView-h-cpp" class="headerlink" title="NovelView.h/cpp"></a>NovelView.h/cpp</h2><blockquote>
+<p>此程序把image切片渲染缝合成全景图，并且计算出任意浏览的视角。设计了一种数据结构（<em>LazyNovelViewBuffer</em>），描述了当前需要的新视角，然后一步求出结果。</p>
+</blockquote>
+<p><strong>LazyNovelViewBuffer</strong></p>
+<blockquote>
+<p>warpL[u][v] = (x, y, t).表示在最后全景图中，左眼的从(x,y)获得新视角，时间是t，此像素的垂直和水平分速度为u，v。（<strong>此处并不是非常理解</strong>）</p>
+</blockquote>
+<p><strong>未完待续</strong></p>
+<h2 id="PixFlow-h"><a href="#PixFlow-h" class="headerlink" title="PixFlow.h"></a>PixFlow.h</h2><blockquote>
+<p>有一段名为<strong>computeOpticalFlow</strong>的函数。应该是计算光流法的核心。<br>在代码中发现以下几个关键词<strong><em>computeOpticalFlow</em></strong>、<strong><em>buildPyramid</em></strong><br>我觉得需要学习LK光流法和Pyramidal Implementation of the Lucas Kanade Feature Tracker Description of the algorithm</p>
+</blockquote>
+<p><strong>未完待续</strong></p>
+<h1 id="TIPs"><a href="#TIPs" class="headerlink" title="TIPs"></a>TIPs</h1><p><strong>BGRA</strong> ： 一种像素格式（pixel format）像素色彩按分量的大小和排列。这种格式以每个像素所使用的总位数以及用于存储像素色彩的红、绿、蓝和 alpha 分量（透明度）的位数指定。</p>
+<blockquote>
+<p>颜色通道中R,G,B,A,L 以及 X 的意义是：<br>R<br>红色成分，通常范围从0.0（没有红色）到1.0（全部的红色）。<br>G<br>绿色成分，通常范围从0.0（没有绿色）到1.0（全部的绿色）。<br>B<br>蓝色成分，通常范围从0.0（没有蓝色）到1.0（全部的蓝色）。<br>A<br>alpha（不透明度）成分，通常范围从0.0（完全透明）到1.0（不透明）。<br>L<br>亮度成分，通常范围从0.0（黑暗）到1.0（全白）。最终这个成分会被分散到RGB每个中完成最终的图像效果。<br>X<br>这个是被系统忽略的成分。<br>对于RGBL通道来说，默认的情况下设置为0。而Alpha通道却不同，在默认的情况下被设定为1，代表不透明。</p>
+</blockquote>
+<p><strong>PNG</strong>：Portable Network Graphics (PNG)。</p>
+<p><strong>Mat存图像</strong></p>
+<blockquote>
+<p>一般的图像文件格式使用的是 Unsigned 8bits，CvMat矩阵对应的参数类型就是CV_8UC1，CV_8UC2，CV_8UC3。<br>（最后的1、2、3表示通道数，譬如RGB3通道就用CV_8UC3）<br>而float 是32位的，对应CvMat数据结构参数就是：CV_32FC1，CV_32FC2，CV_32FC3…<br>double是64bits，对应CvMat数据结构参数：CV_64FC1，CV_64FC2，CV_64FC3等。<br>变换这种矩阵单位类型，Mat里有一个函数convertTo可以办到：<br>C++:void Mat::convertTo(OutputArray m, int rtype, double alpha=1, double beta=0 )<br><a href="http://blog.csdn.net/qq_29540745/article/details/52487832" target="_blank" rel="external">参考源</a></p>
+</blockquote>
+<p><strong>CV</strong></p>
+<blockquote>
+<p>• <em>CV_8U </em>- 8-bit unsigned integers ( 0..255 )<br>• <em>CV_8S</em> - 8-bit signed integers ( -128..127 )<br>• <em>CV_16U</em> - 16-bit unsigned integers ( 0..65535 )<br>• <em>CV_16S</em> - 16-bit signed integers ( -32768..32767 )<br>• <em>CV_32S</em> - 32-bit signed integers ( -2147483648..2147483647 )<br>• <em>CV_32F</em> - 32-bit ﬂoating-point numbers ( -FLT_MAX..FLT_MAX, INF, NAN )<br>• <em>CV_64F</em> - 64-bit ﬂoating-point numbers ( -DBL_MAX..DBL_MAX, INF, NAN )</p>
+</blockquote>
+<p><strong>HSL和HSV色彩空间</strong></p>
+<blockquote>
+<p>HSL和HSV都是一种将RGB色彩模型中的点在圆柱坐标系中的表示法。这两种表示法试图做到比RGB基于笛卡尔坐标系的几何结构更加直观。<br><em>HSL</em>即色相、饱和度、亮度（英语：Hue, Saturation, Lightness），又称HSL。<em>HSV</em>即色相、饱和度、明度（英语：Hue, Saturation, Value），又称HSB，其中B即英语：Brightness。<br>色相（H）是色彩的基本属性，就是平常所说的颜色名称，如红色、黄色等。<br>饱和度（S）是指色彩的纯度，越高色彩越纯，低则逐渐变灰，取0-100%的数值。<br>明度（V），亮度（L），取0-100%。<br><a href="https://zh.wikipedia.org/wiki/HSL%E5%92%8CHSV%E8%89%B2%E5%BD%A9%E7%A9%BA%E9%97%B4" target="_blank" rel="external">参考源</a></p>
+</blockquote>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="beyondtech.org/2017/11/11/光流法具体学习/" data-id="cj9ws8f4n00ar8cwa4hf5vjwq" class="article-share-link">分享</a><div class="tags"><a href="/tags/VR-AR/">VR/AR</a></div><div class="post-nav"><a href="/2017/11/08/Facebook360学习总结/" class="next">Facebook360学习总结</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论 「请确保 disqus.com 可以正常加载」</button></div><script>var disqus_shortname = 'beyondwang';
+var disqus_identifier = '2017/11/11/光流法具体学习/';
+var disqus_title = '光流法具体学习小结';
+var disqus_url = 'beyondtech.org/2017/11/11/光流法具体学习/';
+$('.btn_click_load').click(function() {
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+  $('.btn_click_load').css('display','none');
+});
+$.ajax({
+  url: 'https://disqus.com/favicon.ico',
+  timeout: 3000,
+  type: 'GET',
+  success: (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    $('.btn_click_load').css('display','none');
+  })(),
+  error: function() {
+    $('.btn_click_load').css('display','block');
+  }
+});</script><script id="dsq-count-scr" src="//beyondwang.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1 pure-u-md-1-4"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="beyondtech.org"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/">Algorithm</a><span class="category-list-count">61</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Ariticle/">Ariticle</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Daily/">Daily</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Document/">Document</a><span class="category-list-count">46</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Experience/">Experience</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Expirence/">Expirence</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Language/">Language</a><span class="category-list-count">30</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Resource/">Resource</a><span class="category-list-count">1</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/Oracle/" style="font-size: 15px;">Oracle</a> <a href="/tags/项目/" style="font-size: 15px;">项目</a> <a href="/tags/数据结构/" style="font-size: 15px;">数据结构</a> <a href="/tags/经典问题/" style="font-size: 15px;">经典问题</a> <a href="/tags/DP/" style="font-size: 15px;">DP</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/SQL/" style="font-size: 15px;">SQL</a> <a href="/tags/ASP-NET/" style="font-size: 15px;">ASP.NET</a> <a href="/tags/Shell/" style="font-size: 15px;">Shell</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Bash/" style="font-size: 15px;">Bash</a> <a href="/tags/Feeling/" style="font-size: 15px;">Feeling</a> <a href="/tags/VR-AR/" style="font-size: 15px;">VR/AR</a> <a href="/tags/MVC/" style="font-size: 15px;">MVC</a> <a href="/tags/Thread/" style="font-size: 15px;">Thread</a> <a href="/tags/串/" style="font-size: 15px;">串</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/面向对象/" style="font-size: 15px;">面向对象</a> <a href="/tags/Mac/" style="font-size: 15px;">Mac</a> <a href="/tags/服务器/" style="font-size: 15px;">服务器</a> <a href="/tags/ACM/" style="font-size: 15px;">ACM</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/STL/" style="font-size: 15px;">STL</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Markdown/" style="font-size: 15px;">Markdown</a> <a href="/tags/Tools/" style="font-size: 15px;">Tools</a> <a href="/tags/IOS/" style="font-size: 15px;">IOS</a> <a href="/tags/Swift/" style="font-size: 15px;">Swift</a> <a href="/tags/VR-AR/" style="font-size: 15px;">VR-AR</a> <a href="/tags/VB/" style="font-size: 15px;">VB</a> <a href="/tags/数论/" style="font-size: 15px;">数论</a> <a href="/tags/平面几何/" style="font-size: 15px;">平面几何</a> <a href="/tags/小说/" style="font-size: 15px;">小说</a> <a href="/tags/随笔/" style="font-size: 15px;">随笔</a> <a href="/tags/快速/" style="font-size: 15px;">快速</a> <a href="/tags/Tree/" style="font-size: 15px;">Tree</a> <a href="/tags/记事本/" style="font-size: 15px;">记事本</a> <a href="/tags/游戏开发/" style="font-size: 15px;">游戏开发</a> <a href="/tags/矩阵/" style="font-size: 15px;">矩阵</a> <a href="/tags/Resource/" style="font-size: 15px;">Resource</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/11/11/光流法具体学习/">光流法具体学习小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/08/Facebook360学习总结/">Facebook360学习总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/01/VR摄影相关概念学习/">VR摄影相关概念学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/22/CALIBRATION/">facebook/Surround360的翻译</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/16/VR技术发展报告/">VR技术发展报告</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/02/CodeIgniter入门理解/">CodeIgniter入门理解以及其他知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/11/Mysql-Proxy读写分离/">Mysql-Proxy读写分离</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/10/MYSQL主从实践/">Mysql主从双机备份</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/09/SQL-Tips/">SQL Tips</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/18/计算机操作系统复习/">计算机操作系统复习提纲</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//beyondwang.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://xuanwo.org/" title="漩涡大神" target="_blank">漩涡大神</a><ul></ul><a href="https://fanzheng.org/" title="范神" target="_blank">范神</a><ul></ul><a href="http://www.liaoxuefeng.com/" title="廖雪峰" target="_blank">廖雪峰</a><ul></ul><a href="https://teddysun.com/" title="秋水逸冰" target="_blank">秋水逸冰</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2017 <a href="/." rel="nofollow">泡饭.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
